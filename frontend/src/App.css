@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.container{
+    width:80%;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    height: 100%;
+}
