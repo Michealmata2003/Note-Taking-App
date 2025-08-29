@@ -1,5 +1,7 @@
 import heroimage from "../../../assets/images/heroimage.png";
 
+
+
 const HeroPage = () => {
   return (
     <div className=" bg-gradient-to-r from-purple-100 to-pink-100 w-full h-[100%] py-[3rem]">
@@ -32,7 +34,3 @@ const HeroPage = () => {
 };
 
 export default HeroPage;
-
-{
-  /* <span class="text-gradient gradient-1">solutions</span> */
-}
