@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useAuth } from "../context/AuthContext";
 
 const schema = yup.object().shape({
   // name: yup.string().required("Full name is required"),
@@ -21,9 +22,10 @@ const schema = yup.object().shape({
 });
 
 const Signup = () => {
+  const { login } = useAuth();
+
   const navigate = useNavigate();
 
-  const [newUser, setNewUser] = useState({});
   const {
     register,
     handleSubmit,
@@ -34,34 +36,27 @@ const Signup = () => {
 
   const onSubmit = async (data) => {
     try {
-      // remove confirmPassword before sending
       const { confirmPassword, ...userData } = data;
 
-      // send request to backend
       const res = await axios.post(
         "http://localhost:3001/auth/signup",
         userData
       );
-
-      // if success
       alert("✅ Signup successful!");
-      console.log("User created:", res.data);
 
-      // optionally save token & user
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+      login({
+        username: res.data.username,
+        email: res.data.email,
+        token: res.data.token,
+      });
+      navigate("/signin");
     } catch (err) {
       console.error(err);
       alert(
         "❌ Signup failed: " + (err.response?.data?.message || err.message)
       );
     }
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    navigate("/signin");
+   
   };
 
   return (

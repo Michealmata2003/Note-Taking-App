@@ -5,14 +5,15 @@ const User = require("../models/User");
 
 const router = express.Router();
 
+router.post("/signup", signup);
+router.post("/signin", signin);
+
+
 // signup
 router.post("/signup", async (req, res) => {
   try {
     const { username, email, password, confirmPassword } = req.body;
 
-    // if (password !== confirmPassword) {
-    //   return res.status(400).json({ error: "Passwords do not match" });
-    // }
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
       username,
@@ -20,7 +21,6 @@ router.post("/signup", async (req, res) => {
       password: hashedPassword,
     });
 
-    // res.json(user);
     const token = jwt.sign({ id: user.id }, "secretKey", { expiresIn: "1h" });
 
     res.json({
@@ -33,7 +33,6 @@ router.post("/signup", async (req, res) => {
   }
 });
 
-// login
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;

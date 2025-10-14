@@ -1,10 +1,10 @@
 import React from 'react'
-import Navbar from '../components/nonUser/navbar/Navbar';
-import HeroPage from '../components/nonUser/heroPage/HeroPage';
-import Services from '../components/nonUser/services/Services';
-import Stats from '../components/nonUser/stats/Stats';
-import Contact from '../components/nonUser/contacts/Contacts';
-import Footer from '../components/nonUser/footer/Footer';
+import Navbar from '../components/layouts/navbar/Navbar';
+import HeroPage from '../components/ui/heroPage/HeroPage';
+import Services from '../components/ui/services/Services';
+import Stats from '../components/ui/stats/Stats';
+import Contact from '../components/ui/contacts/Contacts';
+import Footer from '../components/layouts/footer/Footer';
 
 
 const Hero = () => {

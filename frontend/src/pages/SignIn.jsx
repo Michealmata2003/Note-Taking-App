@@ -1,8 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 const schema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
@@ -10,6 +13,8 @@ const schema = yup.object().shape({
 });
 
 const Signin = () => {
+  const { login } = useAuth();
+
   const {
     register,
     handleSubmit,
@@ -18,27 +23,24 @@ const Signin = () => {
     resolver: yupResolver(schema),
   });
 
- const onSubmit = async (data) => {
+  const onSubmit = async (data) => {
     try {
       const res = await axios.post("http://localhost:3001/auth/signin", data);
 
-      // if login is successful
       alert("✅ Login successful!");
       console.log("Login response:", res.data);
 
-      // save token & user info to localStorage
-      localStorage.setItem("token", res.data.token);
+      login({
+        email: res.data.email,
+        token: res.data.token,
+      });
 
-      // redirect user (e.g. to dashboard)
       navigate("/dashboard");
     } catch (err) {
       console.error(err);
-      alert(
-        "❌ Login failed: " + (err.response?.data?.error || err.message)
-      );
+      alert("❌ Login failed: " + (err.response?.data?.error || err.message));
     }
   };
-
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -72,7 +74,9 @@ const Signin = () => {
           >
             Sign In
           </button>
-          <p>Dont have an account? <Link to='/signup'>SignUp</Link></p>
+          <p>
+            Dont have an account? <Link to="/signup">SignUp</Link>
+          </p>
         </form>
       </div>
     </div>

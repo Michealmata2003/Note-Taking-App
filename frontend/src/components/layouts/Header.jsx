@@ -3,9 +3,9 @@ import { LuNotebookText } from "react-icons/lu"
 import { MdOutlineMailOutline } from "react-icons/md"
 import { IoMdNotificationsOutline } from "react-icons/io"
 import { FaRegUser } from "react-icons/fa"
-import { useSidebar } from "../ContextAPI/SidebarContext"
+import { useSidebar } from "../../context/SidebarContext"
 
-function Header() {
+function DashboardHeader() {
     const {toggleSidebar} = useSidebar()
 
   return (
@@ -27,4 +27,4 @@ function Header() {
   )
 }
 
-export default Header
+export default DashboardHeader

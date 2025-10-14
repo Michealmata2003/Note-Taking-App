@@ -1,7 +1,7 @@
-import { useSidebar } from "../ContextAPI/SidebarContext";
+import { useSidebar } from "../../context/SidebarContext";
 import { Link } from "react-router-dom";
 
-function Sidebar() {
+function DashboardSidebar() {
   const { isOpen, toggleSidebar } = useSidebar();
 
   return (
@@ -15,7 +15,6 @@ function Sidebar() {
       </button>
 
       <nav className="mt-16 flex flex-col space-y-4 p-4">
-        {/* <Link to='/home'>Home</Link> */}
         <a href="/notes" onClick={toggleSidebar}>Notes</a>
         <a href="/settings" onClick={toggleSidebar}>Settings</a>
       </nav>
@@ -23,4 +22,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default DashboardSidebar;
