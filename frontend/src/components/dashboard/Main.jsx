@@ -36,7 +36,7 @@ function Main({ children }) {
             <div>
               <ul className="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-6">
                 <li>All</li>
-                <li>Shared Notes</li>
+                <li>Sared Notes</li>
                 <li>Pin Notes</li>
                 <li>Favorite Notes</li>
               </ul>
@@ -50,11 +50,7 @@ function Main({ children }) {
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-7">
             {dummyNotes.map((notes, index) => (
-              <div
-                key={notes.id}
-                className={`p-6 space-y-4 border rounded-2xl shadow-sm ${getRandomColor()} hover:shadow-md transition-all duration-300 cursor-pointer`}
-
-              >
+              <div key={notes.id} className={`p-6 space-y-4 border rounded-2xl shadow-sm ${getRandomColor()} hover:shadow-md transition-all duration-300 cursor-pointer`}>
                 <div className="flex justify-between items-center">
                   <MdOutlineMailOutline className="text-4xl p-2 border-1 border-blue-500 rounded-lg" />
                   <IoMdNotificationsOutline />

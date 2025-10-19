@@ -5,6 +5,7 @@ import Hero from "./pages/Home";
 import Signup from "./pages/Signup";
 import Signin from "./pages/SignIn";
 import Dashboard from "./pages/Dashboard";
+import Reminder from "./pages/Reminder";
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
 
@@ -22,6 +23,8 @@ function App() {
                 <Dashboard />
             }
           />
+          
+          <Route path="/reminder" element={<Reminder />}/>
           {/* <Route
             path="/dashboard"
             element={

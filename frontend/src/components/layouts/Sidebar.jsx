@@ -15,8 +15,13 @@ function DashboardSidebar() {
       </button>
 
       <nav className="mt-16 flex flex-col space-y-4 p-4">
-        <a href="/notes" onClick={toggleSidebar}>Notes</a>
-        <a href="/settings" onClick={toggleSidebar}>Settings</a>
+        {/* <Link to='/dashboard'>Your Notes</Link> */}
+        <a href="/dashboard">Notes</a>
+        <Link to='/notebooks'>Notebooks</Link>
+        <Link to='/reminder'>Reminder</Link>
+        <Link to='/notebooks'>Tags</Link>
+        <Link to='/bin'>Bin</Link>
+        <Link to='/others'>Other Page</Link>
       </nav>
     </div>
   );
