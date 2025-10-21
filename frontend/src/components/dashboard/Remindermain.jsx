@@ -5,6 +5,10 @@ import { dummyNotes } from "./DummyNotes";
 import { noteColors } from "../../utils/Color";
 
 function Remindermain() {
+  const getRandomColor = () => {
+    const randomIndex = Math.floor(Math.random() * noteColors.length);
+    return noteColors[randomIndex];
+  };
   return (
     <main className="pt-20 p-4 max-w-1xl mx-auto w-full space-y-4">
         <section className="flex justify-between items-center w-full px-3 py-3">
@@ -41,7 +45,7 @@ function Remindermain() {
                 {/* Cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-7">
                   
-                {dummyNotes.map((noteColors, index) => (
+                {dummyNotes.map((notes, index) => (
                   <div key={notes.id} className={`p-6 space-y-4 border rounded-2xl shadow-sm ${getRandomColor()} hover:shadow-md transition-all duration-300 cursor-pointer`}>
                     <div className="flex justify-between items-center">
                       <MdOutlineMailOutline className="text-4xl p-2 border-1 border-blue-500 rounded-lg" />
