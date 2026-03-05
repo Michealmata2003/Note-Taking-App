@@ -1,16 +1,29 @@
-import { createContext, useContext, useState,  } from "react";
+import { createContext, useContext, useState } from "react";
 
-const SidebarContext = createContext()
+const SidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const toggleSidebar = () => setIsOpen(!isOpen);
+  const [isOpen, setIsOpen] = useState(false); // controls entire sidebar
+  const [activeDropdown, setActiveDropdown] = useState(null); // controls dropdowns
 
-    return (
-        <SidebarContext.Provider value={{ isOpen, toggleSidebar }}>
-            {children}
-        </SidebarContext.Provider>
-    )
-}
+  const toggleSidebar = () => setIsOpen((prev) => !prev);
 
-export const useSidebar = () => useContext(SidebarContext)
+  const toggleDropdown = (menu) => {
+    setActiveDropdown((prev) => (prev === menu ? null : menu));
+  };
+
+  return (
+    <SidebarContext.Provider
+      value={{
+        isOpen,
+        toggleSidebar,
+        activeDropdown,
+        toggleDropdown,
+      }}
+    >
+      {children}
+    </SidebarContext.Provider>
+  );
+};
+
+export const useSidebar = () => useContext(SidebarContext);
