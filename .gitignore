@@ -1,0 +1,15 @@
+touch .gitignore
+```
+
+Open it and paste this:
+```
+# Backend
+noteplus_backend/node_modules
+noteplus_backend/.env
+
+# Frontend
+frontend/node_modules
+frontend/.env
+
+# OS files
+.DS_Store
