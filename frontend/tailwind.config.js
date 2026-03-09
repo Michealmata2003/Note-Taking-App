@@ -8,8 +8,8 @@ module.exports = {
         'background': "url('././assets/images/herobackground.png')",
       },
       colors: {
-        design1: '#1e646e',
-        design2: '#002c2f',
+        secondary: '#1e646e',
+        primary: '#002c2f',
         design3: '#F1F1F1',
         design4: '#E7E7E7',
         design5: '#43474E',
