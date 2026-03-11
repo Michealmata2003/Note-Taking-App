@@ -6,7 +6,7 @@ export const dummyNotes = [
       "Virtual Digital Marketing Course every week on Monday, Wednesday and Saturday.Virtual Digital Marketing Course every week on Monday",
     category: "shared",
     share: "03 Share",
-    date: "12 Jan 2021",
+    date: "12 Jan 2021"
   },
   {
     id: 2,
