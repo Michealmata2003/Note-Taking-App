@@ -11,7 +11,7 @@ const tagRoutes = require("./routes/tagRoutes");
 
 const app = express();
 
-// ─── Middleware ───────────────────────────────────────────
+// ─── Middleware ─────────────────────────────────────────
 app.use(cors({
   origin: function (origin, callback) {
     const allowedOrigins = [

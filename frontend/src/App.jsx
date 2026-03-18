@@ -1,14 +1,21 @@
-import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Hero from "./pages/Home";
-import Signup from "./pages/Signup";
-import Signin from "./pages/SignIn";
-import Dashboard from "./pages/Dashboard";
-import Reminder from "./pages/Reminder";
-import Bin from './pages/Bin';
-import Projectplan from "./pages/Projectplan";
-import Routine from "./pages/Routine";
-import Planning from "./pages/Planning";
+import "./App.css";
+
+// Public
+import Home from "./pages/Home";
+import SignIn from "./pages/auth/SignIn";
+import Signup from "./pages/auth/Signup";
+
+// Dashboard
+import DashboardPage from "./pages/dashboard/DashboardPage";
+import NotebookPage from "./pages/dashboard/NotebookPage";
+import ReminderPage from "./pages/dashboard/ReminderPage";
+import BinPage from "./pages/dashboard/BinPage";
+import NewNotePage from "./pages/dashboard/NewNotePage";
+import TagsPage from "./pages/dashboard/TagsPage";
+import SettingsPage from "./pages/dashboard/SettingsPage";
+
+// Context
 import { AuthProvider } from "./context/AuthContext";
 import ProtectedRoute from "./context/ProtectedRoute";
 
@@ -17,30 +24,33 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public routes */}
-          <Route path="/" element={<Hero />} />
+          {/* Public */}
+          <Route path="/" element={<Home />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
 
-          {/* Protected routes */}
+          {/* Protected */}
           <Route path="/dashboard" element={
-            <ProtectedRoute><Dashboard /></ProtectedRoute>
-          }/>
+            <ProtectedRoute><DashboardPage /></ProtectedRoute>
+          } />
+          <Route path="/notebooks/:id" element={
+            <ProtectedRoute><NotebookPage /></ProtectedRoute>
+          } />
           <Route path="/reminder" element={
-            <ProtectedRoute><Reminder /></ProtectedRoute>
-          }/>
+            <ProtectedRoute><ReminderPage /></ProtectedRoute>
+          } />
           <Route path="/bin" element={
-            <ProtectedRoute><Bin /></ProtectedRoute>
-          }/>
-          <Route path="/notebooks/project" element={
-            <ProtectedRoute><Projectplan /></ProtectedRoute>
-          }/>
-          <Route path="/notebooks/routine" element={
-            <ProtectedRoute><Routine /></ProtectedRoute>
-          }/>
-          <Route path="/notebooks/planning" element={
-            <ProtectedRoute><Planning /></ProtectedRoute>
-          }/>
+            <ProtectedRoute><BinPage /></ProtectedRoute>
+          } />
+          <Route path="/notes/new" element={
+            <ProtectedRoute><NewNotePage /></ProtectedRoute>
+          } />
+          <Route path="/tags" element={
+            <ProtectedRoute><TagsPage /></ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute><SettingsPage /></ProtectedRoute>
+          } />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

@@ -1,11 +1,9 @@
-import React from 'react'
-import Navbar from '../components/layouts/navbar/Navbar';
-import HeroPage from '../components/ui/heroPage/HeroPage';
-import Services from '../components/ui/services/Services';
-import Stats from '../components/ui/stats/Stats';
-import Contact from '../components/ui/contacts/Contacts';
-import Footer from '../components/layouts/footer/Footer';
-
+import Navbar from '../components/layout/Navbar';
+import HeroPage from '../components/landing/HeroPage';
+import Services from '../components/landing/Services';
+import Stats from '../components/landing/Stats';
+import Contact from '../components/landing/Contacts';
+import Footer from '../components/layout/Footer';
 
 const Hero = () => {
   return (
@@ -17,7 +15,7 @@ const Hero = () => {
       <Contact />
       <Footer />
     </div>
-  )
+  );
 }
 
-export default Hero
+export default Hero;

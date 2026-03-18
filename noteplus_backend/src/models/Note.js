@@ -11,6 +11,15 @@ const noteSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    icon: {
+      type: String,
+      default: "📝",
+    },
+    priority: {
+      type: String,
+      enum: ["Default", "Very Low", "Low", "Medium", "High", "Very High"],
+      default: "Default",
+    },
     type: {
       type: String,
       enum: ["blank", "todo", "essay", "daily"],
@@ -71,7 +80,7 @@ const noteSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 noteSchema.pre("save", function () {
