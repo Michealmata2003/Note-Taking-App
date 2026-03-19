@@ -12,13 +12,12 @@ function useCreateNote() {
       setLoading(true);
       setError(null);
 
-      // Build payload based on note type
       const payload = {
-        title: formData.title,
+        title:    formData.title,
         type,
         priority: formData.priority,
-        icon: formData.selectedIcon,
-        reminderDate: formData.reminderDate || undefined,
+        icon:     formData.selectedIcon,
+        reminderAt: formData.reminderDate || undefined,
       };
 
       if (type === "blank") {
@@ -29,11 +28,11 @@ function useCreateNote() {
         payload.todoItems = formData.todoItems.filter((i) => i.text.trim());
       } else if (type === "daily") {
         payload.content = [
-          formData.morningReflection,
-          formData.eveningReflection,
-          formData.gratitude,
+          `🌅 Morning:\n${formData.morningReflection}`,
+          `🌙 Evening:\n${formData.eveningReflection}`,
+          `🙏 Gratitude:\n${formData.gratitude}`,
+          `😊 Mood: ${formData.mood}`,
         ].join("\n\n");
-        payload.mood = formData.mood;
       }
 
       await noteService.create(payload);

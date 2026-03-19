@@ -6,17 +6,15 @@ function useNotes(filter = "all") {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Build query params based on active filter
   const getParams = useCallback(() => {
     switch (filter) {
-      case "pinned":    return { pinned: true };
-      case "favourite": return { favourite: true };
+      case "pinned":    return { isPinned: true };
+      case "favourite": return { isFavourite: true };
       case "shared":    return { shared: true };
       default:          return {};
     }
   }, [filter]);
 
-  // Fetch notes
   const fetchNotes = useCallback(async () => {
     try {
       setLoading(true);
@@ -30,53 +28,34 @@ function useNotes(filter = "all") {
     }
   }, [getParams]);
 
-  useEffect(() => {
-    fetchNotes();
-  }, [fetchNotes]);
+  useEffect(() => { fetchNotes(); }, [fetchNotes]);
 
-  // Toggle pin
   const togglePin = async (id) => {
     try {
       await noteService.togglePin(id);
       setNotes((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, pinned: !n.pinned } : n))
+        prev.map((n) => (n._id === id ? { ...n, isPinned: !n.isPinned } : n))
       );
-    } catch (err) {
-      console.error("Toggle pin failed", err);
-    }
+    } catch (err) { console.error("Toggle pin failed", err); }
   };
 
-  // Toggle favourite
   const toggleFavourite = async (id) => {
     try {
       await noteService.toggleFavourite(id);
       setNotes((prev) =>
-        prev.map((n) => (n._id === id ? { ...n, favourite: !n.favourite } : n))
+        prev.map((n) => (n._id === id ? { ...n, isFavourite: !n.isFavourite } : n))
       );
-    } catch (err) {
-      console.error("Toggle favourite failed", err);
-    }
+    } catch (err) { console.error("Toggle favourite failed", err); }
   };
 
-  // Trash note
   const trashNote = async (id) => {
     try {
       await noteService.trash(id);
       setNotes((prev) => prev.filter((n) => n._id !== id));
-    } catch (err) {
-      console.error("Trash note failed", err);
-    }
+    } catch (err) { console.error("Trash note failed", err); }
   };
 
-  return {
-    notes,
-    loading,
-    error,
-    fetchNotes,
-    togglePin,
-    toggleFavourite,
-    trashNote,
-  };
+  return { notes, loading, error, fetchNotes, togglePin, toggleFavourite, trashNote };
 }
 
 export default useNotes;

@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { noteColors } from "../../utils/colors";
 import { HiOutlinePencilAlt } from "react-icons/hi";
-import { BsPin, BsShare, BsTrash, BsStar } from "react-icons/bs";
+import { BsPin, BsShare, BsTrash, BsStar, BsPencil } from "react-icons/bs";
 import { IoCalendarOutline } from "react-icons/io5";
 import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import useNotes from "../../hooks/useNotes";
 
 const filters = [
-  { key: "all",       label: "All" },
-  { key: "shared",    label: "Shared Notes" },
-  { key: "pinned",    label: "Pin Notes" },
+  { key: "all", label: "All" },
+  { key: "shared", label: "Shared Notes" },
+  { key: "pinned", label: "Pin Notes" },
   { key: "favourite", label: "Favourite Notes" },
 ];
 
@@ -31,12 +31,13 @@ function NotesDashboard() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
-  const { notes, loading, error, togglePin, toggleFavourite, trashNote } = useNotes(activeFilter);
+  const { notes, loading, error, togglePin, toggleFavourite, trashNote } =
+    useNotes(activeFilter);
 
   const getColor = (index) => noteColors[index % noteColors.length];
 
   const filteredNotes = notes.filter((note) =>
-    note.title?.toLowerCase().includes(searchQuery.toLowerCase())
+    note.title?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   const formatDate = (dateStr) => {
@@ -51,7 +52,6 @@ function NotesDashboard() {
   return (
     <main className="flex-1 p-4 lg:p-6">
       <div className="bg-white rounded-xl border border-gray-200 shadow-sm">
-
         {/* Section Header */}
         <div className="px-5 pt-5 pb-0">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
@@ -79,7 +79,11 @@ function NotesDashboard() {
                     ? "border-current"
                     : "border-transparent text-gray-400 hover:text-gray-600"
                 }`}
-                style={activeFilter === f.key ? { color: "#1e646e", borderColor: "#1e646e" } : {}}
+                style={
+                  activeFilter === f.key
+                    ? { color: "#1e646e", borderColor: "#1e646e" }
+                    : {}
+                }
               >
                 {f.label}
               </button>
@@ -91,7 +95,6 @@ function NotesDashboard() {
 
         {/* Content */}
         <div className="p-5">
-
           {/* Error state */}
           {error && (
             <div className="text-center py-8">
@@ -109,7 +112,9 @@ function NotesDashboard() {
           {/* Loading state */}
           {loading && !error && (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {[...Array(6)].map((_, i) => <SkeletonCard key={i} />)}
+              {[...Array(6)].map((_, i) => (
+                <SkeletonCard key={i} />
+              ))}
             </div>
           )}
 
@@ -143,22 +148,42 @@ function NotesDashboard() {
                     </div>
                     {/* Hover actions */}
                     <div className="flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                      {/* Edit button — new */}
                       <button
-                        onClick={(e) => { e.stopPropagation(); togglePin(note._id); }}
-                        className={`p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 transition-colors ${note.pinned ? "text-blue-500" : "text-gray-500 hover:text-blue-500"}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/notes/edit/${note._id}`);
+                        }}
+                        className="p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 text-gray-500 hover:text-green-500 transition-colors"
+                        title="Edit"
+                      >
+                        <BsPencil className="text-xs" />
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          togglePin(note._id);
+                        }}
+                        className={`p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 transition-colors ${note.isPinned ? "text-blue-500" : "text-gray-500 hover:text-blue-500"}`}
                         title="Pin"
                       >
                         <BsPin className="text-xs" />
                       </button>
                       <button
-                        onClick={(e) => { e.stopPropagation(); toggleFavourite(note._id); }}
-                        className={`p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 transition-colors ${note.favourite ? "text-yellow-500" : "text-gray-500 hover:text-yellow-500"}`}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleFavourite(note._id);
+                        }}
+                        className={`p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 transition-colors ${note.isFavourite ? "text-yellow-500" : "text-gray-500 hover:text-yellow-500"}`}
                         title="Favourite"
                       >
                         <BsStar className="text-xs" />
                       </button>
                       <button
-                        onClick={(e) => { e.stopPropagation(); trashNote(note._id); }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          trashNote(note._id);
+                        }}
                         className="p-1.5 rounded-lg bg-white bg-opacity-70 hover:bg-opacity-100 text-gray-500 hover:text-red-500 transition-colors"
                         title="Move to trash"
                       >
@@ -169,9 +194,13 @@ function NotesDashboard() {
 
                   {/* Content */}
                   <div className="mb-4">
-                    <h3 className="font-semibold text-gray-800 text-base mb-2">{note.title}</h3>
+                    <h3 className="font-semibold text-gray-800 text-base mb-2">
+                      {note.title}
+                    </h3>
                     <p className="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                      {note.content || (note.todoItems?.map(i => i.text).join(", ")) || ""}
+                      {note.content ||
+                        note.todoItems?.map((i) => i.text).join(", ") ||
+                        ""}
                     </p>
                   </div>
 
@@ -179,13 +208,31 @@ function NotesDashboard() {
                   <div className="flex items-center justify-between pt-3 border-t border-black border-opacity-5">
                     <div className="flex items-center gap-1.5 text-xs text-gray-500">
                       <BsShare className="text-xs" />
-                      <span>{note.sharedWith?.length > 0 ? `${note.sharedWith.length} share` : "Only You"}</span>
+                      <span>
+                        {note.sharedWith?.length > 0
+                          ? `${note.sharedWith.length} share`
+                          : "Only You"}
+                      </span>
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-gray-500">
                       <IoCalendarOutline className="text-xs" />
                       <span>{formatDate(note.createdAt)}</span>
                     </div>
                   </div>
+                  {/* <div className="flex items-center justify-between pt-3 border-t border-black border-opacity-5">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                      <BsShare className="text-xs" />
+                      <span>
+                        {note.sharedWith?.length > 0
+                          ? `${note.sharedWith.length} share`
+                          : "Only You"}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-xs text-gray-500">
+                      <IoCalendarOutline className="text-xs" />
+                      <span>{formatDate(note.createdAt)}</span>
+                    </div>
+                  </div> */}
                 </div>
               ))}
             </div>
